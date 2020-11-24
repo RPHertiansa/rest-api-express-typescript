@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var data = [
+let data = [
     { id: 1,
         nama: "farhan ammar",
         role: "backend developer"
@@ -14,39 +14,36 @@ var data = [
         role: "backend developer"
     },
 ];
-var UserController = /** @class */ (function () {
-    function UserController() {
+class UserController {
+    read(req, res) {
+        return res.json(data);
     }
-    UserController.prototype.read = function (req, res) {
+    index(req, res) {
         return res.json(data);
-    };
-    UserController.prototype.index = function (req, res) {
-        return res.json(data);
-    };
-    UserController.prototype.create = function (req, res) {
-        var _a = req.body, nama = _a.nama, role = _a.role, id = _a.id;
-        var data2 = data.push({
-            id: id,
-            nama: nama,
-            role: role
+    }
+    create(req, res) {
+        const { nama, role, id } = req.body;
+        let data2 = data.push({
+            id,
+            nama,
+            role
         });
         return res.send({
             status: "sukses",
             data: data2
         });
-    };
-    UserController.prototype.update = function (req, res) {
-        var id = req.params.id;
-        var name = req.body.name;
-        var updateData = data.find(function (dt) { return dt.id == id; });
+    }
+    update(req, res) {
+        const { id } = req.params;
+        const { name } = req.body;
+        let updateData = data.find(dt => dt.id == id);
         updateData.nama = name;
         return res.send(updateData);
-    };
-    UserController.prototype.delete = function (req, res) {
-        var id = req.params.id;
-        var deletes = data.filter(function (dt) { return dt.id != id; });
+    }
+    delete(req, res) {
+        const { id } = req.params;
+        let deletes = data.filter(dt => dt.id != id);
         return res.send(deletes);
-    };
-    return UserController;
-}());
+    }
+}
 exports.default = new UserController();

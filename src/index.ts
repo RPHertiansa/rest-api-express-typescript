@@ -4,16 +4,20 @@ import morgan from 'morgan'
 import compression from 'compression'
 import helmet from 'helmet'
 import cors from 'cors'
+import {config as dotenv} from 'dotenv'
 
 // routes
 import UserRoutes from './router/UserRoutes'
 import ProductRoutes from './router/ProductRoutes'
+import AuthRoutes from './router/AuthRouter'
 class App {
     public app: Application
     constructor () {
         this.app = express()
         this.plugin()
-        this.routes()  
+        this.routes()
+        dotenv()
+        
     }
         protected plugin() : void {
             this.app.use(bodyParser.json())
@@ -26,6 +30,7 @@ class App {
     protected routes() : void {
         this.app.use('/user', UserRoutes)
         this.app.use('/product', ProductRoutes)
+        this.app.use('/auth', AuthRoutes)
         this.app.route("/users").get((req: Request, res: Response) => {
             res.send("aas")
         })
